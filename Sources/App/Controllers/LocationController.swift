@@ -7,7 +7,11 @@ final class LocationController: ResourceRepresentable {
     /// When users call 'GET' on '/posts'
     /// it should return an index of all available posts
     func index(_ req: Request) throws -> ResponseRepresentable {
-        return try Location.all().makeJSON()
+        var locations = [Location]()
+        if let first = try Location.makeQuery().sort("ts", .descending).first() {
+            locations.append(first)
+        }
+        return try locations.makeJSON()
     }
 
     /// When consumers call 'POST' on '/posts' with valid JSON
