@@ -8,7 +8,7 @@ final class LocationController: ResourceRepresentable {
     /// it should return an index of all available posts
     func index(_ req: Request) throws -> ResponseRepresentable {
         var locations = [Location]()
-        if let first = try Location.makeQuery().sort("ts", .descending).first() {
+        if let first = try Location.makeQuery().sort(Location.Keys.ts, .descending).first() {
             locations.append(first)
         }
         return try locations.makeJSON()
